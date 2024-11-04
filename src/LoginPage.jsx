@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PrivateRoutes from "./PrivateRoutes";
 import { useNavigate } from "react-router-dom";
 import car from "./assets/car.png";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +22,14 @@ const LoginPage = () => {
       console.log(error);
     }
   }
-
+  // useEffect(() => {
+  //   userDetails();
+  // }, []);
   const handleSubmit = () => {
-    userDetails();
+    navigate("/homePage");
+    setTimeout(() => {
+      userDetails();
+    }, 5000);
     console.log("hiiii");
   };
   console.log(car);
@@ -44,16 +49,19 @@ const LoginPage = () => {
                 className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none mb-6"
               />
             </label>
-            <label htmlFor="">
-              <p className="text-xs font-bold text-gray-300">Password</p>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none"
-              />
-            </label>
+            <div className="relative">
+              <label htmlFor="">
+                <p className="text-xs font-bold text-gray-300">Password</p>
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none"
+                />
+                <FaRegEyeSlash className="pointer-events-none w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-3  mt-2" />
+              </label>
+            </div>
           </div>
           <button
             type="submit"

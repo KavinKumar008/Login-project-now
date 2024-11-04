@@ -7,6 +7,7 @@ import LoginPage from "./LoginPage.jsx";
 import HeaderBar from "./HeaderBar.jsx";
 import PrivateRoutes from "./PrivateRoutes.jsx";
 import ErrorPage from "./error/ErrorPage.jsx";
+import HomePage from "./homepage/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         <HeaderBar />
       </PrivateRoutes>
     ),
+  },
+  {
+    path: "/homePage",
+    element: <HomePage />,
   },
 ]);
 
