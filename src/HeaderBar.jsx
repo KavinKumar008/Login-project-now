@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UploadDialog from "./uploadDailog/UploadDialog";
 
 const HeaderBar = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = () => {
     sessionStorage.removeItem("access-Token");
@@ -15,11 +17,17 @@ const HeaderBar = () => {
         <p>Settings</p>
       </div>
       <div className="flex gap-10 cursor-pointer">
+        <button type="button" onClick={() => setIsDialogOpen(true)}>
+          Upload Image
+        </button>
         <button type="button" onClick={handleSubmit}>
           Logout
         </button>
-        <p>Privacy</p>
       </div>
+      <UploadDialog
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </main>
   );
 };

@@ -8,15 +8,15 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  async function userDetails() {
+  async function handleLogin() {
     try {
       const response = await axios.post(
         "https://sps.ragunanthan.in/api/auth/logIn",
-        { Email: "sivasankarsivakumarsak@gmail.com", password: "Test@1234" }
+        { Email: email, password: password }
       );
       if (response.status === 200) {
         sessionStorage.setItem("access-Token", response.data.data.accessToken);
-        navigate("/header");
+        navigate("/homePage");
       }
     } catch (error) {
       console.log(error);
@@ -26,13 +26,9 @@ const LoginPage = () => {
   //   userDetails();
   // }, []);
   const handleSubmit = () => {
-    navigate("/homePage");
-    setTimeout(() => {
-      userDetails();
-    }, 5000);
-    console.log("hiiii");
+    handleLogin();
   };
-  console.log(car);
+
   return (
     <main className=" flex justify-between flex-col sm:flex-row">
       <section className="w-full h-screen flex justify-center items-center flex-col ">
@@ -40,24 +36,24 @@ const LoginPage = () => {
           <h1 className="text-2xl font-bold">Sign in to your account</h1>
           <div className="w-96 max-w-full">
             <label htmlFor="email">
-              <p className="text-xs font-bold text-gray-300">Mail Id</p>
+              <p className="text-xs font-bold text-gray-300 mb-1">Mail Id</p>
               <input
                 type="email"
                 placeholder="Enter your email id"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none mb-6"
+                className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none mb-6 bg-blue-50"
               />
             </label>
             <div className="relative">
               <label htmlFor="">
-                <p className="text-xs font-bold text-gray-300">Password</p>
+                <p className="text-xs font-bold text-gray-300 mb-1">Password</p>
                 <input
                   type="password"
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none"
+                  className="w-full pl-3 py-1.5 border boreder-indigo-600 rounded-md outline-none bg-blue-50"
                 />
                 <FaRegEyeSlash className="pointer-events-none w-4 h-4 absolute top-1/2 transform -translate-y-1/2 right-3  mt-2" />
               </label>

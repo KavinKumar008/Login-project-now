@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-// import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./LoginPage.jsx";
 import HeaderBar from "./HeaderBar.jsx";
@@ -15,14 +14,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
     errorElement: <ErrorPage />,
   },
-  {
-    path: "/header",
-    element: (
-      <PrivateRoutes>
-        <HeaderBar />
-      </PrivateRoutes>
-    ),
-  },
+
   {
     path: "/homePage",
     element: <HomePage />,
