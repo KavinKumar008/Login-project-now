@@ -3,8 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./LoginPage.jsx";
-import HeaderBar from "./HeaderBar.jsx";
-import PrivateRoutes from "./PrivateRoutes.jsx";
 import ErrorPage from "./error/ErrorPage.jsx";
 import HomePage from "./homepage/HomePage.jsx";
 

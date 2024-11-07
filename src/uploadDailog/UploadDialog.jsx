@@ -2,21 +2,58 @@ import React, { useState } from "react";
 import styles from "./Style.module.css";
 import * as Dialog from "@radix-ui/react-dialog";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 const UploadDialog = ({ isDialogOpen, setIsDialogOpen }) => {
   const [storingImage, setStoringImage] = useState(null);
   const [descriptionData, setDescriptionData] = useState("");
-  const [state, setstate] = useState([]);
+
   const handleSubmit = () => {
     setIsDialogOpen(false);
     console.log(storingImage);
     console.log(descriptionData);
     setDescriptionData("");
-    setstate([...storingImage, descriptionData]);
   };
 
   // console.log(storingImage);
-  console.log(state);
+
+  const fileName = storingImage.name;
+  const fileType = storingImage.type;
+
+  console.log(fileName);
+  console.log(fileType);
+
+  async function uploadingImage() {
+    try {
+      const response = await axios.get(
+        `https://sps.ragunanthan.in/api/test/generate-presigned-url?fileName=${fileName}&fileType=${fileType}`
+      );
+      if (response.status === 200) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  uploadingImage();
+
+  async function settingApiData() {
+    try {
+      const response = await axios.put(
+        "https://sps.ragunanthan.in/api/userinventoryupload.s3.amazonaws.com/images/1730992298739_batman.jpg?AWSAccessKeyId=AKIAQXPZDL5QOHUKJ5V4&Content-Type=image%2Fjpeg&Expires=1730993298&Signature=1JZc6NN3LuwLKRgOLiOMe8WIXIY%3D",
+        { storingImage },
+        { headers: { "Content-Type": storingImage.type } }
+      );
+      if (response.status === 200) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  settingApiData();
 
   return (
     <Dialog.Root open={isDialogOpen}>
@@ -45,7 +82,7 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen }) => {
                   id="upload"
                   accept=".jpg"
                   onChange={(e) => {
-                    setStoringImage(e.target.files);
+                    setStoringImage(e.target.files[0]);
                   }}
                   className="mt-1"
                 />

@@ -7,8 +7,10 @@ import { FaRegEyeSlash } from "react-icons/fa";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   async function handleLogin() {
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://sps.ragunanthan.in/api/auth/logIn",
@@ -29,6 +31,9 @@ const LoginPage = () => {
     handleLogin();
   };
 
+  if (loading) {
+    return <h1>Please Wait....</h1>;
+  }
   return (
     <main className=" flex justify-between flex-col sm:flex-row">
       <section className="w-full h-screen flex justify-center items-center flex-col ">
