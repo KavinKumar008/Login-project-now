@@ -14,26 +14,49 @@ const PaginationBar = ({ currentPage, setCurrentPage, totalPages }) => {
 
   // console.log(totalPages);
   return (
-    <main className="flex justify-end items-center list-none gap-3">
+    <main className="flex justify-end items-center list-none gap-3 bg-[#5eead4]">
       <div>
-        {currentPage <= 0 ? (
-          setCurrentPage(0)
-        ) : (
-          <button onClick={goToPrevPage}>
-            Previous <span className="w-1 ml-2 border border-black"></span>
-          </button>
-        )}
+        <button
+          onClick={goToPrevPage}
+          disabled={currentPage === 1}
+          className={`px-3 py-1 border rounded ${
+            currentPage === 1
+              ? "text-gray-400 border-gray-300 cursor-not-allowed"
+              : "text-blue-600 border-blue-600 hover:bg-blue-100"
+          }`}
+        >
+          Previous
+        </button>
       </div>
-      {pageNumbers.map((pgNumber) => (
-        <li key={pgNumber}>
-          <button onClick={() => setCurrentPage(pgNumber)}>{pgNumber}</button>
+      {pageNumbers.map((pgNumber, index) => (
+        <li key={index}>
+          <button
+            onClick={() => setCurrentPage(pgNumber)}
+            className={`px-3 py-1 rounded border ${
+              pgNumber === currentPage
+                ? "bg-blue-600 text-white border-blue-600"
+                : "text-blue-600 border-blue-600 hover:bg-blue-100"
+            }`}
+          >
+            {pgNumber}
+          </button>
         </li>
       ))}
 
       <div>
-        {currentPage !== totalPages && (
-          <button onClick={goToNextPage}>Next</button>
-        )}
+        {/* {currentPage !== totalPages && ( */}
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+          className={`px-3 py-1 border rounded ${
+            currentPage === totalPages
+              ? "text-gray-400 border-gray-300 cursor-not-allowed"
+              : "text-blue-600 border-blue-600 hover:bg-blue-100"
+          }`}
+        >
+          Next
+        </button>
+        {/* )} */}
       </div>
     </main>
   );

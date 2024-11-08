@@ -1,27 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Style.module.css";
 import * as Dialog from "@radix-ui/react-dialog";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 
-const UploadDialog = ({ isDialogOpen, setIsDialogOpen }) => {
+const UploadDialog = ({ isDialogOpen, setIsDialogOpen, getUserDetails }) => {
   const [storingImage, setStoringImage] = useState(null);
   const [descriptionData, setDescriptionData] = useState("");
 
   const handleSubmit = () => {
     setIsDialogOpen(false);
-    console.log(storingImage);
-    console.log(descriptionData);
     setDescriptionData("");
+    uploadingImage();
   };
 
-  // console.log(storingImage);
-
-  const fileName = storingImage.name;
-  const fileType = storingImage.type;
-
-  console.log(fileName);
-  console.log(fileType);
+  const fileName = storingImage !== null && storingImage.name;
+  const fileType = storingImage !== null && storingImage.type;
 
   async function uploadingImage() {
     try {
@@ -30,20 +24,40 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen }) => {
       );
       if (response.status === 200) {
         console.log(response);
+        settingImageApiData(response.data.url);
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  uploadingImage();
-
-  async function settingApiData() {
+  async function settingImageApiData(s3Url) {
     try {
-      const response = await axios.put(
-        "https://sps.ragunanthan.in/api/userinventoryupload.s3.amazonaws.com/images/1730992298739_batman.jpg?AWSAccessKeyId=AKIAQXPZDL5QOHUKJ5V4&Content-Type=image%2Fjpeg&Expires=1730993298&Signature=1JZc6NN3LuwLKRgOLiOMe8WIXIY%3D",
-        { storingImage },
-        { headers: { "Content-Type": storingImage.type } }
+      const response = await axios.put(s3Url, storingImage, {
+        headers: { "Content-Type": fileType },
+      });
+      if (response.status === 200) {
+        console.log(response);
+        uploadImageToDb(s3Url);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function uploadImageToDb(s3Url) {
+    const imageUrl = s3Url.split("?")[0];
+    // console.log(s3Url);
+    try {
+      const response = await axios.post(
+        "https://sps.ragunanthan.in/api/test/userDetails",
+        {
+          imageUrl,
+          latitude: 10.2,
+          description: descriptionData,
+          longitude: 121.23,
+        },
+        { headers: { "Content-Type": "application/json" } }
       );
       if (response.status === 200) {
         console.log(response);
@@ -52,8 +66,6 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen }) => {
       console.log(error);
     }
   }
-
-  settingApiData();
 
   return (
     <Dialog.Root open={isDialogOpen}>

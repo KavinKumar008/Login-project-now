@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./LoginPage.jsx";
 import ErrorPage from "./error/ErrorPage.jsx";
 import HomePage from "./homepage/HomePage.jsx";
+import PrivateRoutes from "./PrivateRoutes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,11 @@ const router = createBrowserRouter([
 
   {
     path: "/homePage",
-    element: <HomePage />,
+    element: (
+      <PrivateRoutes>
+        <HomePage />
+      </PrivateRoutes>
+    ),
   },
 ]);
 

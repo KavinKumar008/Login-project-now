@@ -24,9 +24,7 @@ const LoginPage = () => {
       console.log(error);
     }
   }
-  // useEffect(() => {
-  //   userDetails();
-  // }, []);
+
   const handleSubmit = () => {
     handleLogin();
   };

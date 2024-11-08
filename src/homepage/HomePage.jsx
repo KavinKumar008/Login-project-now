@@ -3,6 +3,7 @@ import axios from "axios";
 import Cards from "./Cards";
 import HeaderBar from "../HeaderBar";
 import PaginationBar from "../paginationbar/PaginationBar";
+import UploadDialog from "../uploadDailog/UploadDialog";
 
 const HomePage = () => {
   const [apiData, setApiData] = useState([]);
@@ -31,7 +32,7 @@ const HomePage = () => {
     getUserDetails();
   }, [currentPage]);
 
-  console.log(apiData);
+  // console.log(apiData);
   return (
     <div>
       <HeaderBar />
@@ -43,12 +44,13 @@ const HomePage = () => {
         ))}
       </>
       <PaginationBar
-        nPages={totalPages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
         setTotalPages={setTotalPages}
       />
+
+      <UploadDialog getUserDetails={getUserDetails} />
     </div>
   );
 };
