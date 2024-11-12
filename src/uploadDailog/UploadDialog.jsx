@@ -23,7 +23,6 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen, getUserDetails }) => {
         `https://sps.ragunanthan.in/api/test/generate-presigned-url?fileName=${fileName}&fileType=${fileType}`
       );
       if (response.status === 200) {
-        console.log(response);
         settingImageApiData(response.data.url);
       }
     } catch (error) {
@@ -37,7 +36,6 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen, getUserDetails }) => {
         headers: { "Content-Type": fileType },
       });
       if (response.status === 200) {
-        console.log(response);
         uploadImageToDb(s3Url);
       }
     } catch (error) {
@@ -47,7 +45,6 @@ const UploadDialog = ({ isDialogOpen, setIsDialogOpen, getUserDetails }) => {
 
   async function uploadImageToDb(s3Url) {
     const imageUrl = s3Url.split("?")[0];
-    // console.log(s3Url);
     try {
       const response = await axios.post(
         "https://sps.ragunanthan.in/api/test/userDetails",

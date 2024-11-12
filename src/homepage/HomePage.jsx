@@ -19,7 +19,7 @@ const HomePage = () => {
         `https://sps.ragunanthan.in/api/test/userDetails?page=${currentPage}`
       );
       if (response.status === 200) {
-        // console.log(response.data.data);
+        // console.log(response);
         setApiData(response.data.data);
         setTotalPages(response.data.pagination.totalPages);
       }
